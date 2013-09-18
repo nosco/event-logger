@@ -1,0 +1,30 @@
+{
+  "name": "event-logger",
+  "version": "0.1.0",
+  "description": "EventLogger can be used for simple logging and audit logging - but also as a timer for test and debugging",
+  "keywords":[
+    "events",
+    "log",
+    "logging",
+    "audit",
+    "debug"
+  ],
+  "author": "Dan Larsen",
+  "maintainers": [{
+    "name": "Dan Larsen",
+    "url": "http://github.com/morphar"
+  }],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/nosco/event-logger.git"
+  },
+  "github": "http://github.com/nosco/event-logger",
+  "bugs": {
+    "url": "http://github.com/nosco/event-logger/issues"
+  },
+  "license": "MIT",
+  "main": "./index.js",
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
