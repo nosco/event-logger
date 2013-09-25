@@ -1,3 +1,5 @@
+[![NPM version](https://badge.fury.io/js/block-scope.png)](http://badge.fury.io/js/event-logger)
+
 # event-logger
 
 EventLogger can be used for simple logging and audit logging - but also as a timer for test and debugging.
@@ -8,9 +10,9 @@ EventLogger can be used for simple logging and audit logging - but also as a tim
 
 ### Examples
 
-Simple logging: [example1.js](./examples/example1.js)
+Simple logging: [example1.js](https://github.com/nosco/event-logger/blob/master/examples/example1.js)
 
-Advanced logging with timer: [example2.js](./examples/example2.js)
+Advanced logging with timer: [example2.js](https://github.com/nosco/event-logger/blob/master/examples/example2.js)
 
 ### This is an early BETA version
 

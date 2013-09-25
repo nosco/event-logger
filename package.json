@@ -1,6 +1,6 @@
 {
   "name": "event-logger",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "EventLogger can be used for simple logging and audit logging - but also as a timer for test and debugging",
   "keywords":[
     "events",

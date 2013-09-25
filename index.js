@@ -28,14 +28,14 @@ EventLogger.prototype.end = function() {
 */
 EventLogger.prototype.startEvent = function(data) {
   var event = this.event(data);
-  event.end = this.endEvent;
+  event.end = event.endEvent = this._endEvent;
   return event;
 };
 
 /**
   End the event - you can add more data to the event object
 */
-EventLogger.prototype.endEvent = function(data) {
+EventLogger.prototype._endEvent = function(data) {
   // Get the time before updating the event object
   // What we are logging are done now and the time to calculate and build the event object,
   // shouldn't be counted as time spent on the logged event.
