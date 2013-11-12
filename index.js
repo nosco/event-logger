@@ -1,8 +1,17 @@
+var util = require('util');
+var events = require('events');
+
 /**
   EventLogger can be used for simple logging and audit logging - but also as a timer for test and debugging
   use EventLogger.events to retrieve the logged events
 */
-module.exports = EventLogger = function(name) {
+module.exports = EventLogger = function(name, emitEvents) {
+  this.emitEvents = emitEvents || true;
+
+  if(this.emitEvents === true) {
+    events.EventEmitter.call(this);
+  }
+
   name = name || '';
   if(name) {
     this.name = name;
@@ -12,6 +21,8 @@ module.exports = EventLogger = function(name) {
   this.lastEvent = this.started;
   this.event({ event: 'started', type: 'system' });
 };
+util.inherits(EventLogger, events.EventEmitter);
+module.exports = EventLogger;
 
 /**
   End the logger and calculate total time (ms) of all events
@@ -20,6 +31,11 @@ EventLogger.prototype.end = function() {
   this.event({ event: 'ended', type: 'system' });
   this.ended = new Date().getTime();
   this.total = this.ended - this.started;
+
+  if(this.emitEvents === true) {
+    this.emit('logger ended');
+  }
+
   return this.total;
 };
 
@@ -28,14 +44,20 @@ EventLogger.prototype.end = function() {
 */
 EventLogger.prototype.startEvent = function(data) {
   var event = this.event(data);
-  event.end = event.endEvent = this._endEvent;
+  event.end = this.endEvent;
+  event.emit = this.emit;
+
+  if(this.emitEvents === true) {
+    this.emit('event started', data);
+  }
+
   return event;
 };
 
 /**
   End the event - you can add more data to the event object
 */
-EventLogger.prototype._endEvent = function(data) {
+EventLogger.prototype.endEvent = function(data) {
   // Get the time before updating the event object
   // What we are logging are done now and the time to calculate and build the event object,
   // shouldn't be counted as time spent on the logged event.
@@ -58,8 +80,11 @@ EventLogger.prototype._endEvent = function(data) {
 
   // Don't wait for the garbage collector...
   delete tmpTime;
-  delete data;
   delete this.end;
+
+  if(this.emitEvents === true) {
+    this.emit('event ended', data);
+  }
 
   return this;
 };
@@ -96,8 +121,11 @@ EventLogger.prototype.event = function(data) {
 
   // Don't wait for the garbage collector...
   delete tmpTime;
-  delete data;
   delete lastEvent;
+
+  if(this.emitEvents === true) {
+    this.emit('event', data);
+  }
 
   // Set the event data and return it
   return this.events[newLength - 1] = data;
